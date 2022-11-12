@@ -1,15 +1,25 @@
-.App {
-  text-align: center;
-}
-
-.AppRoot {
-  background-color: #282c34;
-  min-height: 100vh;
+.AppRoot{
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
+.AppBody{
+  margin-top: var(--header-height);
+  border: 2px black solid;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: row;
+  background-color: var(--primary-color);
+  filter: brightness(105%);
+  
+}
+
+.AppDashboard{}

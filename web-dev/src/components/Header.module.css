@@ -1,0 +1,23 @@
+.HeaderRoot {
+    position: absolute;
+    top: 0;
+    background-color: var(--primary-color);
+    width: 100%;
+    height: var(--header-height);
+    border-bottom: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
+
+.HeaderRoot::after{
+    content:'Carford';
+    left: 5px;
+    position: absolute;
+}
+
+.Items{
+    user-select: none;
+    margin: 0 20px;
+}

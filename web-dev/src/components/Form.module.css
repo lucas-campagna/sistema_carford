@@ -1,0 +1,22 @@
+.LoginForm {
+    width: 300px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.LoginFormInput {
+    display: grid;
+    margin: 40px;
+    grid-template-columns: auto 1fr;
+    row-gap: 10px;
+}
+
+.LoginFormInputInput {
+    margin-right: 10px;
+}
+
+.LoginFormSubmitButton {
+    
+}
