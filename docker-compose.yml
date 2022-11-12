@@ -4,7 +4,6 @@ services:
   postgresql:
     image: docker.io/bitnami/postgresql:11
     environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
       - POSTGRESQL_USERNAME=bn_keycloak
       - POSTGRESQL_DATABASE=bitnami_keycloak
@@ -28,6 +27,22 @@ services:
     environment:
       POSTGRES_PASSWORD: admin
   
+  # api:
+  #   build: ./api
+  #   ports:
+  #     - 8081:5000
+  #   command: flask run --host=0.0.0.0 --port=5000
+  #   volumes:
+  #     - ./web:/usr/src/app
+  #   working_dir: /usr/src/app
+  #   environment:
+  #     - FLASK_APP main.py
+  #     - FLASK_DEBUG 1
+  #     - PYTHONDONTWRITEBYTECODE 1
+  #     - PYTHONUNBUFFERED 1
+  #   depends_on:
+  #     - db
+
   web:
     build: ./web
     ports:
@@ -36,6 +51,11 @@ services:
     volumes:
       - ./web:/usr/src/app
     working_dir: /usr/src/app
+    environment:
+      - FLASK_APP main.py
+      - FLASK_DEBUG 1
+      - PYTHONDONTWRITEBYTECODE 1
+      - PYTHONUNBUFFERED 1
     depends_on:
       - db
 
