@@ -1,49 +1,44 @@
 version: "3.8"
 
 services:
-  auth:
-    build: ./auth
-    ports:
-      - 1338:8080
+  postgresql:
+    image: docker.io/bitnami/postgresql:11
     environment:
-      # - KC_DB_URL=jdbc:h2://db-auth:1337/postgres
-      - KC_DB_USERNAME=postgres
-      - KC_DB_PASSWORD=admin
-      # - KC_HOSTNAME=localhost
-      - KC_HTTP_ENABLED=true
-      - KC_HTTP_RELATIVE_PATH=/admin
-    depends_on:
-      - db-auth
-    entrypoint: /opt/keycloak/bin/kc.sh
-    command: start
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=bn_keycloak
+      - POSTGRESQL_DATABASE=bitnami_keycloak
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
 
-  db-auth:
-    image: postgres:13-alpine
+  keycloak:
+    image: docker.io/bitnami/keycloak:19
+    depends_on:
+      - postgresql
+    ports:
+      - "80:8080"
+      
+  db:
+    image: postgres
     restart: always
     ports:
-      - 1337:5432
+      - 5432:5432
     volumes:
-      - ./auth/data:/var/lib/postgresql/data
+      - ./data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: admin
-      
-  # db:
-  #   image: postgres:13-alpine
-  #   restart: always
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - ./data:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: admin
   
-  # web:
-  #   build: ./web
-  #   ports:
-  #     - 8080:5000
-  #   command: flask run --host=0.0.0.0 --port=5000
-  #   volumes:
-  #     - ./web:/usr/src/app
-  #   working_dir: /usr/src/app
-  #   depends_on:
-  #     - db
+  web:
+    build: ./web
+    ports:
+      - 8080:5000
+    command: flask run --host=0.0.0.0 --port=5000
+    volumes:
+      - ./web:/usr/src/app
+    working_dir: /usr/src/app
+    depends_on:
+      - db
+
+volumes:
+  postgresql_data:
+    driver: local
