@@ -27,37 +27,38 @@ services:
     environment:
       POSTGRES_PASSWORD: admin
   
-  # api:
-  #   build: ./api
-  #   ports:
-  #     - 8081:5000
-  #   command: flask run --host=0.0.0.0 --port=5000
-  #   volumes:
-  #     - ./web:/usr/src/app
-  #   working_dir: /usr/src/app
-  #   environment:
-  #     - FLASK_APP main.py
-  #     - FLASK_DEBUG 1
-  #     - PYTHONDONTWRITEBYTECODE 1
-  #     - PYTHONUNBUFFERED 1
-  #   depends_on:
-  #     - db
+  api:
+    build: ./api
+    ports:
+      - 8081:5000
+    volumes:
+      - ./api:/usr/src/app
+    working_dir: /usr/src/app
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_DEBUG=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    command: flask run --host 0.0.0.0 --port 5000
+    depends_on:
+      - db
+      - keycloak
 
   web:
     build: ./web
     ports:
       - 8080:5000
-    command: flask run --host=0.0.0.0 --port=5000
+    command: flask run --host 0.0.0.0 --port 5000
     volumes:
       - ./web:/usr/src/app
     working_dir: /usr/src/app
     environment:
-      - FLASK_APP main.py
-      - FLASK_DEBUG 1
-      - PYTHONDONTWRITEBYTECODE 1
-      - PYTHONUNBUFFERED 1
+      - FLASK_APP=main.py
+      - FLASK_DEBUG=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
     depends_on:
-      - db
+      - api
 
 volumes:
   postgresql_data:
