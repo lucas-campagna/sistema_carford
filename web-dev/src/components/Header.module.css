@@ -11,13 +11,18 @@
     align-items: center;
 }
 
-.HeaderRoot::after{
-    content:'Carford';
-    left: 5px;
-    position: absolute;
-}
-
-.Items{
+.Items {
     user-select: none;
     margin: 0 20px;
+    width: 100%;
+}
+
+.LoginItems {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.headerLogoutButton {
+    cursor: pointer;
 }

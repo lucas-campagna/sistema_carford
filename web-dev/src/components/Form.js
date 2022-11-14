@@ -30,9 +30,9 @@ export default function Form({connectionState, onSubmit}){
     <div className={styles.LoginForm}>
         <div className={styles.LoginFormInput}>
             <label className={styles.LoginFormInputInput}>Login</label>
-            <input type="text" ref={refName} onChange={handleOnChage}/>
+            <input type="text" ref={refName} onChange={handleOnChage} placeholder='lucas'/>
             <label className={styles.LoginFormInputInput}>Senha</label>
-            <input type="password" ref={refPass} onChange={handleOnChage}/>
+            <input type="password" ref={refPass} onChange={handleOnChage} placeholder='123'/>
         </div>
         <input
             className={styles.LoginFormSubmitButton}

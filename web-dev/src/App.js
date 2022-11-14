@@ -6,28 +6,29 @@ import './App.css';
 
 function App() {
   const [connectionState, setConnectionState] = useState({
-    username:'cas',
+    username:'Lucas',
     password:'123',
-    token:'sd',
+    token:'',
   });
 
-  // useEffect(async()=>{
-  //   await fetch()
-  // },[]);
 
   function handleSubmit(data){
-    
+    setConnectionState({connectionState,...data})
+  }
+  function handleLogout(){
+    setConnectionState({username:'',password:'',token:''})
   }
   
+  console.log(connectionState)
   return (
     <div className='AppRoot'>
-      <Header connectionState={connectionState}/>
+      <Header connectionState={connectionState} onLogout={handleLogout}/>
       <div className="AppBody">
         {
-          !connectionState.username || !connectionState.token ?
+          !connectionState.username && !connectionState.password ?
           <Form onSubmit={(data) => handleSubmit(data)}/>
           :
-          <Dashboard/>
+          <Dashboard connectionState={connectionState}/>
         }
       </div>
     </div>
